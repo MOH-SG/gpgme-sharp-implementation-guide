@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Security;
 
 namespace ProtectSecretsWithWindowsDataProtectionAPI
@@ -23,7 +24,19 @@ namespace ProtectSecretsWithWindowsDataProtectionAPI
         /// <returns></returns>
         public static SecureString DecryptString(string secret)
         {
-            string sEntropy = ConfigurationManager.AppSettings["entropy"];
+            // Build configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            string? sEntropy = configuration["entropy"];
+            
+            if (string.IsNullOrEmpty(sEntropy))
+            {
+                throw new InvalidOperationException("Required configuration value 'entropy' must be provided in appsettings.json");
+            }
+
             return DecryptString(secret, sEntropy);
         }
 

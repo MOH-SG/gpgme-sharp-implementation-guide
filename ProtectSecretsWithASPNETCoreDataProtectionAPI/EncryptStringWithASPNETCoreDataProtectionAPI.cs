@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -23,8 +24,19 @@ namespace ProtectSecretsWithASPNETCoreDataProtectionAPI
         /// <returns></returns>
         public static string EncryptString(SecureString input)
         {
-            string sEntropy = ConfigurationManager.AppSettings["entropy"];
-            string SSLCertDistinguishedSubjectName = ConfigurationManager.AppSettings["SSLCertDistinguishedSubjectName"];
+            // Build configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            string? sEntropy = configuration["entropy"];
+            string? SSLCertDistinguishedSubjectName = configuration["SSLCertDistinguishedSubjectName"];
+            
+            if (string.IsNullOrEmpty(sEntropy) || string.IsNullOrEmpty(SSLCertDistinguishedSubjectName))
+            {
+                throw new InvalidOperationException("Required configuration values 'entropy' and 'SSLCertDistinguishedSubjectName' must be provided in appsettings.json");
+            }
             var serviceCollection = new ServiceCollection();
             SetupEnvironment.ConfigureServices(serviceCollection, SSLCertDistinguishedSubjectName);
             IDataProtector dataProtector = serviceCollection.BuildServiceProvider().GetDataProtector(purpose: sEntropy);

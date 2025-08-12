@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -24,8 +25,20 @@ namespace ProtectSecretsWithASPNETCoreDataProtectionAPI
         /// <returns></returns>
         public static SecureString DecryptString(string secret)
         {
-            string sEntropy = ConfigurationManager.AppSettings["entropy"];
-            string sslCertDistinguishedSubjectName = ConfigurationManager.AppSettings["SSLCertDistinguishedSubjectName"];
+            // Build configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            string? sEntropy = configuration["entropy"];
+            string? sslCertDistinguishedSubjectName = configuration["SSLCertDistinguishedSubjectName"];
+            
+            if (string.IsNullOrEmpty(sEntropy) || string.IsNullOrEmpty(sslCertDistinguishedSubjectName))
+            {
+                throw new InvalidOperationException("Required configuration values 'entropy' and 'SSLCertDistinguishedSubjectName' must be provided in appsettings.json");
+            }
+
             return DecryptString(secret, sEntropy, sslCertDistinguishedSubjectName);
         }
         /// <summary>

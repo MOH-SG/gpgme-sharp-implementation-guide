@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Text;
 using System.IO;
-
-
 using System.Text.Json;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Security.Cryptography.Xml;
 using System.Linq;
 using OpenPgpBatchJob;
 using Serilog;
 using System.Reflection;
-//using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace OpenPgpBatchJob
 {
@@ -20,9 +18,17 @@ namespace OpenPgpBatchJob
         static void Main(string[] args)
         {
             // Please read the README.md beforehand.
+            
+            // Build configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            // Configure Serilog
             Log.Logger = new LoggerConfiguration()
-            .ReadFrom.AppSettings()
-            .CreateLogger();
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
             Log.Information("####### WELCOME TO MOH's OpenPGP Batch Job! #######");
 
@@ -43,11 +49,19 @@ namespace OpenPgpBatchJob
 
                 Log.Information(sb.ToString());
 
-                var appSettings = ConfigurationManager.AppSettings;
-
                 try
                 {
-                    openPgpHelper.RuntimeAppSettings = AppConfigDictionary.ParseXmlFragmentFromFile(appSettings[args[0]]);
+                    // Get the scenario configuration file path from appsettings.json
+                    var scenarioConfigPath = configuration[$"ScenarioConfigurations:{args[0]}"];
+                    
+                    if (string.IsNullOrEmpty(scenarioConfigPath))
+                    {
+                        Log.Error($"Scenario configuration '{args[0]}' not found in appsettings.json!");
+                        System.Environment.Exit(-1);
+                    }
+
+                    // Load the scenario-specific configuration
+                    openPgpHelper.RuntimeAppSettings = JsonConfigurationReader.LoadFromJsonFile(scenarioConfigPath);
                     openPgpHelper.Init(); // must be called after loading the RuntimeAppSettings
 
                     // [Uncomment the following line of code if necessary for troubleshooting your chosen Secrets Manager]

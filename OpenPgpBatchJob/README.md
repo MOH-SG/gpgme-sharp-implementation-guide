@@ -2,12 +2,12 @@ Intro
 =====
 This project implements a fully functional Production-Ready OpenPGP Batch Job (using gnupgme-sharp). 
 Provides a ready to use option to start implementing OpenPGP in a way that complies with the Secured Coding Rules stated in MOH's OpenPGP Implementation guide without any development efforts.
-This project is written in C# and targets Microsoft .NET Framework 6.0 (LTS). Thanks to .NET 6.0, this Batch Job can be built to run on Windows, Linux and macOS Operating Systems. 
+This project is written in C# and targets Microsoft .NET Framework 8.0 (LTS). Thanks to .NET 8.0, this Batch Job can be built to run on Windows, Linux and macOS Operating Systems. 
 
 Key Features
 1. Ready-to-Use Production-Ready BatchJob that implements OpenPGP in accordance to MOH's OpenPGP Specifications. 
 
-2. Thanks to .NET 6.0, this Batch Job can be built to run on Windows, Linux and macOS Operating Systems.
+2. Thanks to .NET 8.0, this Batch Job can be built to run on Windows, Linux and macOS Operating Systems.
 
 3. This Batch Job supports multiple Scenario configurations (eg. Config_RunAsSender_for_SystemA, Config_RunAsRecipient_for_SystemA, etc.). This allows a single instance of this BatchJob to support multiple OpenPGP use cases - eg. as a 'SenderRole with Partner-System-A' or as a 'RecipientRole with Partner-System-A', etc. Each Execution of the Batch Job will be based on 1 chosen Scenario Configuration, specified in an input argument to run the job.
 
@@ -28,4 +28,4 @@ Refer to [SETUP.docx](SETUP.docx) for further instructions.
 
 
 
-© 2023 jonathan_aw@moh.gov.sg
+ï¿½ 2023 jonathan_aw@moh.gov.sg

@@ -1,0 +1,552 @@
+2025-08-12 14:32:47.912 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:32:47.937 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsRecipient_for_SystemA
+
+
+2025-08-12 14:32:47.937 +08:00 [ERR] Scenario configuration 'Config_RunAsRecipient_for_SystemA
+' not found in appsettings.json!
+2025-08-12 14:33:18.056 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:33:18.080 +08:00 [ERR] Error! No command line arguments found! Please supply the chosen Configuration in the argument. Eg. OpenPgpBatchJob Config_RunAsSender_for_SystemA
+2025-08-12 14:33:34.480 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:33:34.500 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsSender_for_SystemA
+
+2025-08-12 14:33:34.515 +08:00 [ERR] Initialization Error! [System.DllNotFoundException: Unable to load shared library 'libgpgme.so.11' or one of its dependencies. In order to help diagnose loading problems, consider setting the DYLD_PRINT_LIBRARIES environment variable: 
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib, 0x0001): tried: '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib, 0x0001): tried: '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib' (no such file)
+dlopen(libgpgme.so.11.dylib, 0x0001): tried: 'libgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibgpgme.so.11.dylib' (no such file), '/usr/lib/libgpgme.so.11.dylib' (no such file, not in dyld cache), 'libgpgme.so.11.dylib' (no such file)
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib, 0x0001): tried: '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib, 0x0001): tried: '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib' (no such file)
+dlopen(liblibgpgme.so.11.dylib, 0x0001): tried: 'liblibgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSliblibgpgme.so.11.dylib' (no such file), '/usr/lib/liblibgpgme.so.11.dylib' (no such file, not in dyld cache), 'liblibgpgme.so.11.dylib' (no such file)
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11, 0x0001): tried: '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11, 0x0001): tried: '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11' (no such file)
+dlopen(libgpgme.so.11, 0x0001): tried: 'libgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibgpgme.so.11' (no such file), '/usr/lib/libgpgme.so.11' (no such file, not in dyld cache), 'libgpgme.so.11' (no such file)
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11, 0x0001): tried: '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11, 0x0001): tried: '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11' (no such file)
+dlopen(liblibgpgme.so.11, 0x0001): tried: 'liblibgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OSliblibgpgme.so.11' (no such file), '/usr/lib/liblibgpgme.so.11' (no such file, not in dyld cache), 'liblibgpgme.so.11' (no such file)
+
+   at GPGME.Native.Unix.NativeMethods.gpgme_new(IntPtr& ctx)
+   at Libgpgme.Context.Initialize(ContextSigners& signers, ContextSignatureNotations& signots, KeyStore& keystore)
+   at Libgpgme.Context..ctor()
+   at OpenPgpBatchJob.OpenPgpHelper.Init() in /Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/OpenPGPHelper.cs:line 37
+   at OpenPgpBatchJob.Program.Main(String[] args) in /Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/Program.cs:line 65] Exiting with Error Code: -1!
+2025-08-12 14:41:08.297 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:41:08.355 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsSender_for_SystemA
+
+2025-08-12 14:41:08.375 +08:00 [ERR] Initialization Error! [System.DllNotFoundException: Unable to load shared library 'libgpgme.so.11' or one of its dependencies. In order to help diagnose loading problems, consider setting the DYLD_PRINT_LIBRARIES environment variable: 
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/libgpgme.so.11.dylib' (no such file), '/libgpgme.so.11.dylib' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11.dylib' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/libgpgme.so.11.dylib' (no such file), '/libgpgme.so.11.dylib' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11.dylib' (no such file)
+dlopen(libgpgme.so.11.dylib, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/libgpgme.so.11.dylib' (no such file), '/libgpgme.so.11.dylib' (no such file), 'libgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibgpgme.so.11.dylib' (no such file), '/usr/lib/libgpgme.so.11.dylib' (no such file, not in dyld cache), 'libgpgme.so.11.dylib' (no such file)
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/liblibgpgme.so.11.dylib' (no such file), '/liblibgpgme.so.11.dylib' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11.dylib' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/liblibgpgme.so.11.dylib' (no such file), '/liblibgpgme.so.11.dylib' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11.dylib' (no such file)
+dlopen(liblibgpgme.so.11.dylib, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/liblibgpgme.so.11.dylib' (no such file), '/liblibgpgme.so.11.dylib' (no such file), 'liblibgpgme.so.11.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSliblibgpgme.so.11.dylib' (no such file), '/usr/lib/liblibgpgme.so.11.dylib' (no such file, not in dyld cache), 'liblibgpgme.so.11.dylib' (no such file)
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/libgpgme.so.11' (no such file), '/libgpgme.so.11' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/libgpgme.so.11' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/libgpgme.so.11' (no such file), '/libgpgme.so.11' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/libgpgme.so.11' (no such file)
+dlopen(libgpgme.so.11, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/libgpgme.so.11' (no such file), '/libgpgme.so.11' (no such file), 'libgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibgpgme.so.11' (no such file), '/usr/lib/libgpgme.so.11' (no such file, not in dyld cache), 'libgpgme.so.11' (no such file)
+dlopen(/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/liblibgpgme.so.11' (no such file), '/liblibgpgme.so.11' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11' (no such file), '/usr/local/share/dotnet/shared/Microsoft.NETCore.App/9.0.8/liblibgpgme.so.11' (no such file)
+dlopen(/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/liblibgpgme.so.11' (no such file), '/liblibgpgme.so.11' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11' (no such file), '/Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/bin/Debug/net9.0/liblibgpgme.so.11' (no such file)
+dlopen(liblibgpgme.so.11, 0x0001): tried: '/opt/homebrew/opt/gpgme/lib/liblibgpgme.so.11' (no such file), '/liblibgpgme.so.11' (no such file), 'liblibgpgme.so.11' (no such file), '/System/Volumes/Preboot/Cryptexes/OSliblibgpgme.so.11' (no such file), '/usr/lib/liblibgpgme.so.11' (no such file, not in dyld cache), 'liblibgpgme.so.11' (no such file)
+
+   at GPGME.Native.Unix.NativeMethods.gpgme_new(IntPtr& ctx)
+   at Libgpgme.Context.Initialize(ContextSigners& signers, ContextSignatureNotations& signots, KeyStore& keystore)
+   at Libgpgme.Context..ctor()
+   at OpenPgpBatchJob.OpenPgpHelper.Init() in /Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/OpenPGPHelper.cs:line 37
+   at OpenPgpBatchJob.Program.Main(String[] args) in /Users/thianphin/Code/public/gpgme-sharp-implementation-guide/OpenPgpBatchJob/Program.cs:line 65] Exiting with Error Code: -1!
+2025-08-12 14:44:01.041 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:44:01.060 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsSender_for_SystemA
+
+2025-08-12 14:44:02.988 +08:00 [INF] Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpgsm
+Protocol = CMS
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /opt/homebrew/bin/gpgconf
+Protocol = GPGConf
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /Users/thianphin/.gnupg/S.gpg-agent
+Protocol = 3
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /Users/thianphin/.gnupg/S.uiserver
+Protocol = 5
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /nonexistent
+Protocol = 6
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+
+2025-08-12 14:44:02.988 +08:00 [ERR] ERROR: Cannot find Sender's PGP Key (alice@home.internal) or Recipient's PGP key (bob@home.internal) in the keyring! Exiting with Error Code: -1!
+2025-08-12 14:44:39.596 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:44:39.614 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsSender_for_SystemA
+
+2025-08-12 14:44:39.732 +08:00 [INF] Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpgsm
+Protocol = CMS
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /opt/homebrew/bin/gpgconf
+Protocol = GPGConf
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /Users/thianphin/.gnupg/S.gpg-agent
+Protocol = 3
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /Users/thianphin/.gnupg/S.uiserver
+Protocol = 5
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /nonexistent
+Protocol = 6
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+
+2025-08-12 14:44:39.732 +08:00 [ERR] ERROR: Cannot find Sender's PGP Key (alice@home.internal) or Recipient's PGP key (bob@home.internal) in the keyring! Exiting with Error Code: -1!
+2025-08-12 14:45:25.156 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:45:25.175 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsRecipient_for_SystemA
+
+2025-08-12 14:45:25.301 +08:00 [INF] Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpgsm
+Protocol = CMS
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /opt/homebrew/bin/gpgconf
+Protocol = GPGConf
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /Users/thianphin/.gnupg/S.gpg-agent
+Protocol = 3
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /Users/thianphin/.gnupg/S.uiserver
+Protocol = 5
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /nonexistent
+Protocol = 6
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+
+2025-08-12 14:45:25.301 +08:00 [ERR] ERROR: Cannot find Sender's PGP Key (alice@home.internal) or Recipient's PGP key (bob@home.internal) in the keyring! Exiting with Error Code: -1!
+2025-08-12 14:46:08.533 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:46:08.565 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsSender_for_SystemA
+
+2025-08-12 14:46:08.898 +08:00 [INF] Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpgsm
+Protocol = CMS
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /opt/homebrew/bin/gpgconf
+Protocol = GPGConf
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /Users/thianphin/.gnupg/S.gpg-agent
+Protocol = 3
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /Users/thianphin/.gnupg/S.uiserver
+Protocol = 5
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /nonexistent
+Protocol = 6
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+
+2025-08-12 14:46:08.898 +08:00 [ERR] ERROR: Cannot find Sender's PGP Key (alice@home.internal) or Recipient's PGP key (bob@home.internal) in the keyring! Exiting with Error Code: -1!
+2025-08-12 14:53:50.456 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:53:50.475 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsSender_for_SystemA
+
+2025-08-12 14:53:50.605 +08:00 [INF] Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpgsm
+Protocol = CMS
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /opt/homebrew/bin/gpgconf
+Protocol = GPGConf
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /Users/thianphin/.gnupg/S.gpg-agent
+Protocol = 3
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /Users/thianphin/.gnupg/S.uiserver
+Protocol = 5
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /nonexistent
+Protocol = 6
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+
+2025-08-12 14:53:50.605 +08:00 [INF] Searching for Sender's and Recipient's PGP keys in the default keyring on this machine...Ok!
+2025-08-12 14:53:50.608 +08:00 [INF] Sender's Key Properties: Uid = Alice Home <alice@home.internal>
+KeyId = B147AC00982569C6
+Fingerprint = C72B8E257B4AA65DB74CB58DB147AC00982569C6
+Protocol = OpenPGP
+Revoked = False
+Expired = False
+Disabled = False
+Invalid = False
+IsQualified = False
+OwnerTrust = Ultimate
+KeylistMode = Signatures
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = True
+CanSign = True
+Secret = False
+
+Subkey 1 Properties: 
+KeyId = B147AC00982569C6
+Fingerprint = C72B8E257B4AA65DB74CB58DB147AC00982569C6
+Timestamp = 8/12/2025 2:52:49 PM
+TimestampUTC = 8/12/2025 6:52:49 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = False
+CanSign = True
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 301
+
+Subkey 2 Properties: 
+KeyId = 5C94086F5A5F8945
+Fingerprint = 5469591E0F3EA0744FF367605C94086F5A5F8945
+Timestamp = 8/12/2025 2:52:49 PM
+TimestampUTC = 8/12/2025 6:52:49 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = False
+CanCertify = False
+CanEncrypt = True
+CanSign = False
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 302
+
+
+2025-08-12 14:53:50.608 +08:00 [INF] Recipient's Key Properties: Uid = Bob Home <bob@home.internal>
+KeyId = 34772409AE947428
+Fingerprint = A88E7075D4CDC3683EB5D85734772409AE947428
+Protocol = OpenPGP
+Revoked = False
+Expired = False
+Disabled = False
+Invalid = False
+IsQualified = False
+OwnerTrust = Ultimate
+KeylistMode = Signatures
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = True
+CanSign = True
+Secret = False
+
+Subkey 1 Properties: 
+KeyId = 34772409AE947428
+Fingerprint = A88E7075D4CDC3683EB5D85734772409AE947428
+Timestamp = 8/12/2025 2:53:01 PM
+TimestampUTC = 8/12/2025 6:53:01 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = False
+CanSign = True
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 301
+
+Subkey 2 Properties: 
+KeyId = DABCDFC5FF137C41
+Fingerprint = 5F85513CA0E878E533C261B7DABCDFC5FF137C41
+Timestamp = 8/12/2025 2:53:01 PM
+TimestampUTC = 8/12/2025 6:53:01 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = False
+CanCertify = False
+CanEncrypt = True
+CanSign = False
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 302
+
+
+2025-08-12 14:53:50.608 +08:00 [INF] Verifying Source and Destination Folder Paths...Ok!
+2025-08-12 14:53:50.612 +08:00 [INF] >>>>> Job is running in SENDER MODE.
+Source Folder: [/tmp/Sender/src]
+Destination Folder: [/tmp/Sender/dest]
+Archive Folder: [/tmp/Sender/archive]
+2025-08-12 14:53:50.614 +08:00 [INF] COMPLETED! [0] out of [0] files successfully processed!
+2025-08-12 14:54:03.392 +08:00 [INF] ####### WELCOME TO MOH's OpenPGP Batch Job! #######
+2025-08-12 14:54:03.410 +08:00 [INF] Arguments Passed by the Programmer: Config_RunAsRecipient_for_SystemA
+
+2025-08-12 14:54:03.538 +08:00 [INF] Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+Engine Info Properties: FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpg
+Protocol = OpenPGP
+ReqVersion = 1.4.0
+Version = 2.4.8
+
+FileName = /opt/homebrew/Cellar/gnupg/2.4.8/bin/gpgsm
+Protocol = CMS
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /opt/homebrew/bin/gpgconf
+Protocol = GPGConf
+ReqVersion = 2.0.4
+Version = 2.4.8
+
+FileName = /Users/thianphin/.gnupg/S.gpg-agent
+Protocol = 3
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /Users/thianphin/.gnupg/S.uiserver
+Protocol = 5
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+FileName = /nonexistent
+Protocol = 6
+ReqVersion = 1.0.0
+Version = 1.0.0
+
+
+2025-08-12 14:54:03.538 +08:00 [INF] Searching for Sender's and Recipient's PGP keys in the default keyring on this machine...Ok!
+2025-08-12 14:54:03.541 +08:00 [INF] Sender's Key Properties: Uid = Alice Home <alice@home.internal>
+KeyId = B147AC00982569C6
+Fingerprint = C72B8E257B4AA65DB74CB58DB147AC00982569C6
+Protocol = OpenPGP
+Revoked = False
+Expired = False
+Disabled = False
+Invalid = False
+IsQualified = False
+OwnerTrust = Ultimate
+KeylistMode = Signatures
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = True
+CanSign = True
+Secret = False
+
+Subkey 1 Properties: 
+KeyId = B147AC00982569C6
+Fingerprint = C72B8E257B4AA65DB74CB58DB147AC00982569C6
+Timestamp = 8/12/2025 2:52:49 PM
+TimestampUTC = 8/12/2025 6:52:49 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = False
+CanSign = True
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 301
+
+Subkey 2 Properties: 
+KeyId = 5C94086F5A5F8945
+Fingerprint = 5469591E0F3EA0744FF367605C94086F5A5F8945
+Timestamp = 8/12/2025 2:52:49 PM
+TimestampUTC = 8/12/2025 6:52:49 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = False
+CanCertify = False
+CanEncrypt = True
+CanSign = False
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 302
+
+
+2025-08-12 14:54:03.541 +08:00 [INF] Recipient's Key Properties: Uid = Bob Home <bob@home.internal>
+KeyId = 34772409AE947428
+Fingerprint = A88E7075D4CDC3683EB5D85734772409AE947428
+Protocol = OpenPGP
+Revoked = False
+Expired = False
+Disabled = False
+Invalid = False
+IsQualified = False
+OwnerTrust = Ultimate
+KeylistMode = Signatures
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = True
+CanSign = True
+Secret = False
+
+Subkey 1 Properties: 
+KeyId = 34772409AE947428
+Fingerprint = A88E7075D4CDC3683EB5D85734772409AE947428
+Timestamp = 8/12/2025 2:53:01 PM
+TimestampUTC = 8/12/2025 6:53:01 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = True
+CanCertify = True
+CanEncrypt = False
+CanSign = True
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 301
+
+Subkey 2 Properties: 
+KeyId = DABCDFC5FF137C41
+Fingerprint = 5F85513CA0E878E533C261B7DABCDFC5FF137C41
+Timestamp = 8/12/2025 2:53:01 PM
+TimestampUTC = 8/12/2025 6:53:01 AM
+Revoked = False
+Expired = False
+Expires = 1/1/1970 8:00:00 AM
+ExpiresUTC = 1/1/1970 12:00:00 AM
+Disabled = False
+Invalid = False
+IsQualified = False
+IsInfinitely = True
+CanAuthenticate = False
+CanCertify = False
+CanEncrypt = True
+CanSign = False
+Curve = nistp384
+Secret = False
+Length = 384
+PubkeyAlgorithm = 302
+
+
+2025-08-12 14:54:03.541 +08:00 [INF] Verifying Source and Destination Folder Paths...Ok!
+2025-08-12 14:54:03.546 +08:00 [INF] >>>>> Job is running in RECIPIENT MODE.
+Source Folder: [/tmp/Recipient/src]
+Destination Folder: [/tmp/Recipient/dest]
+Archive Folder: [/tmp/Recipient/archive]
+2025-08-12 14:54:03.547 +08:00 [INF] COMPLETED! [0] out of [0] files successfully processed!
