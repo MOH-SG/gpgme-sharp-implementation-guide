@@ -18,9 +18,8 @@ Requirements
 
 - On Windows, you will need to install [Gpg4Win](https://www.gpg4win.org). 
 - On Debian and Ubuntu, install the [libgpgme11 package](https://packages.debian.org/stretch/libgpgme11).
-- On other Linux distros or other operating systems, install libgpgme using your favourite package manager, or compile it from source. 
-
-Note that Gpg4Win currently only distributes a 32-bit build, so on Windows you **must** set your C# app to run in 32-bit mode.
+- On other Linux distros or other operating systems, install libgpgme using your favourite package manager, or compile it from source.
+- If you are building on a macOS system, the library can be installed with brew, e.g. `brew install gpgme`. As the library name might be different, you might need to set up a symbolic link, e.g. `sudo ln -sf libgpgme.dylib libgpgme.so.11`
 
 Usage
 =====

@@ -2,6 +2,8 @@
     *   Updated all projects to target .NET 8.0 (LTS) for improved performance and latest framework features
     *   Updated documentation to reflect .NET 8.0 target framework
     *   Updated publish profiles and configuration files for .NET 8.0
+	*	Updated to support cross platform (AnyCPU)
+	*	Updated XML config to JSON config using Microsoft.Extensions.Configuration
 
 2023-03-27 Jonathan AW <jonathan_aw@moh.gov.sg> - NA
     *   Forked the original github project and adapted the sample codes in the examples to provide a developer's guide for implementing gpg for MOH and MOH's partners. Omited unnecessary VS.Net projects for brevity.
