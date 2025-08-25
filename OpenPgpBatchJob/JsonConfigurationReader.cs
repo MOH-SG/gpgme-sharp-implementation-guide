@@ -10,7 +10,7 @@ namespace OpenPgpBatchJob
     /// Helper Class to load JSON configurations and flatten them to key-value pairs
     /// for compatibility with the existing code structure
     /// </summary>
-    internal class JsonConfigurationReader
+    public class JsonConfigurationReader
     {
         public static Dictionary<string, string> LoadFromJsonFile(string filePath)
         {
