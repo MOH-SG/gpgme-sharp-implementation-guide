@@ -12,11 +12,11 @@ namespace OpenPgpBatchJob
     /// <summary>
     /// Helper Class to load custom app configurations
     /// </summary>
-    internal class AppConfigDictionary
+    internal static class AppConfigDictionary
     {
         public static Dictionary<string, string> ParseXmlFragmentFromFile(string filePath)
         {
-            Dictionary<string, string> dictionary = new();
+            Dictionary<string, string> dictionary = [];
 
 
             if (!File.Exists(filePath)) { throw new FileNotFoundException(string.Format("[{0}] NOT FOUND!", filePath)); }

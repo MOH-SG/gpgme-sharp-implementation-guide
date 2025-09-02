@@ -10,3 +10,9 @@ indent_size = 4
 
 [*.{csproj,nuspec}]
 indent_size = 2
+
+# C# specific settings
+[*.cs]
+# Suppress SonarAnalyzer S101 for proper API abbreviations
+# AWS, API, DPAPI are legitimate abbreviations that should remain in uppercase
+dotnet_diagnostic.S101.severity = none

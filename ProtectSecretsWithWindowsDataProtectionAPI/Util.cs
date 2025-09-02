@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProtectSecretsWithWindowsDataProtectionAPI
 {
-    public class Util
+    public static class Util
     {
         public static string ToInsecureString(SecureString input)
         {

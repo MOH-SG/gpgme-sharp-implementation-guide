@@ -16,3 +16,6 @@ gpgme-sharp.userprefs
 # macOS system files
 .DS_Store
 **/.DS_Store
+
+# Working directory for temporary files and analysis scripts
+working/

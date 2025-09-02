@@ -13,8 +13,8 @@ namespace PgpCombinedCrypto
     /// </summary>
     internal class GetSecretsFromAWSSecretsManager
     {
-        private static SecretsManagerCache cache = new SecretsManagerCache();
-        private async Task<string> GetSecretStringAsync(string SecretID)
+        private static readonly SecretsManagerCache cache = new();
+        private static async Task<string> GetSecretStringAsync(string SecretID)
         {
             string secrets;
             
@@ -24,10 +24,10 @@ namespace PgpCombinedCrypto
         }
                 
 
-        public string GetSecretString(string SecretID) {
+        public static string GetSecretString(string SecretID) {
 
             // Start a task - calling an async function in this example
-            Task<string> callTask = Task.Run(() => GetSecretStringAsync(SecretID));
+            Task<string> callTask = Task.Run(() => GetSecretsFromAWSSecretsManager.GetSecretStringAsync(SecretID));
             // Wait for it to finish
             callTask.Wait();
             // Get the result

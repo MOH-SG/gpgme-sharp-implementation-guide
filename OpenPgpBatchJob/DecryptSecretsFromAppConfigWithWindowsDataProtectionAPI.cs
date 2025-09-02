@@ -16,7 +16,7 @@ namespace PgpCombinedCrypto
     /// LIMITATION! This helper class only supports Windows Systems!
     /// Credits: https://weblogs.asp.net/jongalloway/encrypting-passwords-in-a-net-app-config-file 
     /// </summary>
-    internal class DecryptSecretsFromAppConfigWithWindowsDataProtectionAPI 
+    internal static class DecryptSecretsFromAppConfigWithWindowsDataProtectionAPI 
     {
         /// <summary>
         /// Fetch and Decrypt OpenPGP Private Key's Secret Passphrase
@@ -24,7 +24,7 @@ namespace PgpCombinedCrypto
         /// <param name="SecretValue"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string GetSecretString(string SecretValue, string Entropy)
+        public static string GetSecretString(string SecretValue, string Entropy)
         {
             return Util.ToInsecureString(SecretsDecryptor.DecryptString(SecretValue, Entropy));
         }

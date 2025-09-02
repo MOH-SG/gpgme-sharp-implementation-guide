@@ -17,7 +17,7 @@ namespace OpenPgpBatchJob.Tests.Unit
         {
             _testDirectory = Path.Combine(Path.GetTempPath(), "OpenPgpBatchJobTests", Guid.NewGuid().ToString());
             Directory.CreateDirectory(_testDirectory);
-            _createdFiles = new List<string>();
+            _createdFiles = [];
         }
 
         [Fact]

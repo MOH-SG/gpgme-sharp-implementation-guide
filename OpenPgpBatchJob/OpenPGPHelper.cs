@@ -1,4 +1,5 @@
-﻿using Libgpgme;
+﻿#nullable enable
+using Libgpgme;
 using PgpCombinedCrypto;
 using System;
 using System.Collections.Generic;
@@ -15,33 +16,57 @@ namespace OpenPgpBatchJob
 {
     public class OpenPgpHelper
     {
-        public Dictionary<string, string> RuntimeAppSettings { get => _runtimeAppSettings; set => _runtimeAppSettings = value; }
-        public string SenderEmail { get => _senderEmail; set => _senderEmail = value; }
-        public string RecipientEmail { get => _recipientEmail; set => _recipientEmail = value; }
-        public PgpKey RecipientKey { get => _recipientKey; set => _recipientKey = value; }
-        public PgpKey SenderKey { get => _senderKey; set => _senderKey = value; }
+        public Dictionary<string, string> RuntimeAppSettings { get; set; } = [];
+        public string SenderEmail 
+        { 
+            get => _senderEmail ?? throw new InvalidOperationException("SenderEmail not initialized"); 
+            set => _senderEmail = value; 
+        }
+        public string RecipientEmail 
+        { 
+            get => _recipientEmail ?? throw new InvalidOperationException("RecipientEmail not initialized"); 
+            set => _recipientEmail = value; 
+        }
+        public PgpKey RecipientKey 
+        { 
+            get => _recipientKey ?? throw new InvalidOperationException("RecipientKey not initialized"); 
+            set => _recipientKey = value; 
+        }
+        public PgpKey SenderKey 
+        { 
+            get => _senderKey ?? throw new InvalidOperationException("SenderKey not initialized"); 
+            set => _senderKey = value; 
+        }
 
-        private Dictionary<string, string> _runtimeAppSettings;
-        private Context _ctx;
-        string _senderEmail;
-        string _recipientEmail;
-        IKeyStore _keyring;
-        PgpKey _recipientKey;
-        PgpKey _senderKey;
+        private Context? _ctx;
+        private string? _senderEmail;
+        private string? _recipientEmail;
+        private KeyStore? _keyring;
+        private PgpKey? _recipientKey;
+        private PgpKey? _senderKey;
 
         public OpenPgpHelper() { }
 
         public void Init()
         {
-
             _ctx = new Context();
 
             if (_ctx.Protocol != Protocol.OpenPGP)
                 _ctx.SetEngineInfo(Protocol.OpenPGP, null, null);
 
+            // Validate runtime settings are available
+            if (RuntimeAppSettings == null)
+                throw new InvalidOperationException("RuntimeAppSettings not set");
 
-            SenderEmail = Convert.ToString(_runtimeAppSettings["SenderEmailAddress"]).Trim();
-            RecipientEmail = Convert.ToString(_runtimeAppSettings["RecipientEmailAddress"]).Trim();
+            // Validate required configuration keys exist
+            if (!RuntimeAppSettings.TryGetValue("SenderEmailAddress", out var senderEmailValue) || string.IsNullOrWhiteSpace(senderEmailValue))
+                throw new InvalidOperationException("SenderEmailAddress not configured");
+                
+            if (!RuntimeAppSettings.TryGetValue("RecipientEmailAddress", out var recipientEmailValue) || string.IsNullOrWhiteSpace(recipientEmailValue))
+                throw new InvalidOperationException("RecipientEmailAddress not configured");
+
+            SenderEmail = senderEmailValue.Trim();
+            RecipientEmail = recipientEmailValue.Trim();
 
             String[] searchpattern = new String[2];
             searchpattern[0] = SenderEmail;
@@ -84,6 +109,13 @@ namespace OpenPgpBatchJob
         /// <param name="archiveFilePath">Path for archiving the Source File after a successful operation. If null, then source file will remain in the source folder after processing.</param>
         public void EncryptAndSignFile(string sourceFilePath, string destinationFilePath, string? archiveFilePath)
         {
+            // Validate initialization
+            if (_ctx == null)
+                throw new InvalidOperationException("OpenPgpHelper not initialized. Call Init() first.");
+            if (_recipientKey == null)
+                throw new InvalidOperationException("RecipientKey not set. Call Init() first.");
+            if (_senderKey == null)
+                throw new InvalidOperationException("SenderKey not set. Call Init() first.");
 
             /////// ENCRYPT AND SIGN DATA ///////
             GpgmeData plain = new GpgmeFileData(sourceFilePath);
@@ -149,6 +181,10 @@ namespace OpenPgpBatchJob
         /// <param name="archiveFilePath"></param>
         public void DecryptFileAndVerifySignature(string sourceFilePath, string destinationFilePath, string? archiveFilePath)
         {
+            // Validate initialization
+            if (_ctx == null)
+                throw new InvalidOperationException("OpenPgpHelper not initialized. Call Init() first.");
+
             GpgmeData cipher = new GpgmeFileData(sourceFilePath);
             GpgmeData plain = new GpgmeFileData(destinationFilePath);
 
@@ -157,7 +193,6 @@ namespace OpenPgpBatchJob
             _ctx.SetPassphraseFunction(RecipientPassphraseCallback);
             _ctx.PinentryMode = PinentryMode.Loopback; // Use the Loopback option to supply the secretPassphrase programmatically
 
-            //Console.Write(">>>>> Decrypting and verifying data...\n");
             Log.Information($"Source File Size: {cipher.Length / 1024.0:N2} KBytes...");
 
             CombinedResult comrst = _ctx.DecryptAndVerify(
@@ -261,7 +296,7 @@ namespace OpenPgpBatchJob
         private string GetSenderSecretPassphrase()
         {
 
-            string passphraseProtectionMode = _runtimeAppSettings["PassphraseProtectionMode"].Trim().ToUpper();
+            string passphraseProtectionMode = RuntimeAppSettings["PassphraseProtectionMode"].Trim().ToUpper();
             string senderSecretPassphrase;
 
             Log.Verbose(string.Format("Fetching Sender's Secret Passphrase programmatically [{0}]...", passphraseProtectionMode));
@@ -272,19 +307,20 @@ namespace OpenPgpBatchJob
                     {
                         // Recommended for AWS serverless and containerized based solutions. Also useful for Applications hosted on AWS EC2 Instances.
                         GetSecretsFromAWSSecretsManager sm = new();
-                        string senderSecretPassphraseID = _runtimeAppSettings["SenderAWSSecretsName"]; //Set the Secret Name configured in AWS Secrets Manager
-                        var retrievedSecrets = JsonSerializer.Deserialize<Dictionary<string, string>>(sm.GetSecretString(senderSecretPassphraseID));
-                        senderSecretPassphrase = retrievedSecrets["SecretPassPhrase"];
+                        string senderSecretPassphraseID = RuntimeAppSettings["SenderAWSSecretsName"]; //Set the Secret Name configured in AWS Secrets Manager
+                        var retrievedSecrets = JsonSerializer.Deserialize<Dictionary<string, string>>(GetSecretsFromAWSSecretsManager.GetSecretString(senderSecretPassphraseID));
+                        if (retrievedSecrets == null || !retrievedSecrets.TryGetValue("SecretPassPhrase", out var secretValue))
+                            throw new InvalidOperationException("Failed to retrieve SecretPassPhrase from AWS Secrets Manager");
+                        senderSecretPassphrase = secretValue;
                         Log.Verbose("Fetched Secret Passphrase from AWS Secrets Manager...");
                     }
                     break;
                 case "WINDOWS_DPAPI":
                     {
                         // Only works for Systems developed for Windows OS. Optimized for Windows-Based Applications! 
-                        DecryptSecretsFromAppConfigWithWindowsDataProtectionAPI sm = new();
-                        string senderSecretPassphraseEncrypted = _runtimeAppSettings["SenderEncryptedSecretPassPhrase_WIND_DPAPI"];
-                        string entropy = _runtimeAppSettings["entropy"];
-                        senderSecretPassphrase = sm.GetSecretString(senderSecretPassphraseEncrypted, entropy);
+                        string senderSecretPassphraseEncrypted = RuntimeAppSettings["SenderEncryptedSecretPassPhrase_WIND_DPAPI"];
+                        string entropy = RuntimeAppSettings["entropy"];
+                        senderSecretPassphrase = DecryptSecretsFromAppConfigWithWindowsDataProtectionAPI.GetSecretString(senderSecretPassphraseEncrypted, entropy);
 
                         Log.Verbose("Decrypted Secret Passphrase using Windows Data Protection API...");
                     }
@@ -293,11 +329,10 @@ namespace OpenPgpBatchJob
                 default:
                     {
                         // Works for Windows, Linux and macOS based Applications. Can be used on any .NET core applications, including non-ASP.NET ones. Recommended for all other types of Applications that cannot use Solutions 1 & 2. 
-                        DecryptSecretsFromAppConfigWithASPNETCoreDPAPI sm = new();
-                        string senderSecretPassphraseEncrypted = _runtimeAppSettings["SenderEncryptedSecretPassPhrase_ASP_DPAPI"];
-                        string entropy = _runtimeAppSettings["entropy"];
-                        string sslCertDistinguishedSubjectName = _runtimeAppSettings["SSLCertDistinguishedSubjectName"];
-                        senderSecretPassphrase = sm.GetSecretString(senderSecretPassphraseEncrypted, entropy, sslCertDistinguishedSubjectName);
+                        string senderSecretPassphraseEncrypted = RuntimeAppSettings["SenderEncryptedSecretPassPhrase_ASP_DPAPI"];
+                        string entropy = RuntimeAppSettings["entropy"];
+                        string sslCertDistinguishedSubjectName = RuntimeAppSettings["SSLCertDistinguishedSubjectName"];
+                        senderSecretPassphrase = DecryptSecretsFromAppConfigWithASPNETCoreDPAPI.GetSecretString(senderSecretPassphraseEncrypted, entropy, sslCertDistinguishedSubjectName);
                         Log.Verbose("Decrypted Secret Passphrase using ASP.NET Core Data Protection API...");
                     }
                     break;
@@ -313,7 +348,7 @@ namespace OpenPgpBatchJob
         private string GetRecipientSecretPassphrase()
         {
 
-            string passphraseProtectionMode = _runtimeAppSettings["PassphraseProtectionMode"].Trim().ToUpper();
+            string passphraseProtectionMode = RuntimeAppSettings["PassphraseProtectionMode"].Trim().ToUpper();
             string recipientSecretPassphrase;
             Log.Verbose(string.Format("Fetching Recipient's Secret Passphrase programmatically [{0}]...", passphraseProtectionMode));
             switch (passphraseProtectionMode)
@@ -322,19 +357,20 @@ namespace OpenPgpBatchJob
                     {
                         // Recommended for AWS serverless and containerized based solutions. Also useful for Applications hosted on AWS EC2 Instances.
                         GetSecretsFromAWSSecretsManager sm = new();
-                        string recipientSecretPassphraseID = _runtimeAppSettings["RecipientAWSSecretsName"]; //Set the Secret Name configured in AWS Secrets Manager
-                        var retrievedSecrets = JsonSerializer.Deserialize<Dictionary<string, string>>(sm.GetSecretString(recipientSecretPassphraseID));
-                        recipientSecretPassphrase = retrievedSecrets["SecretPassPhrase"];
+                        string recipientSecretPassphraseID = RuntimeAppSettings["RecipientAWSSecretsName"]; //Set the Secret Name configured in AWS Secrets Manager
+                        var retrievedSecrets = JsonSerializer.Deserialize<Dictionary<string, string>>(GetSecretsFromAWSSecretsManager.GetSecretString(recipientSecretPassphraseID));
+                        if (retrievedSecrets == null || !retrievedSecrets.TryGetValue("SecretPassPhrase", out var secretValue))
+                            throw new InvalidOperationException("Failed to retrieve SecretPassPhrase from AWS Secrets Manager");
+                        recipientSecretPassphrase = secretValue;
                         Log.Verbose("Fetched Secret Passphrase from AWS Secrets Manager...");
                     }
                     break;
                 case "WINDOWS_DPAPI":
                     {
                         // Only works for Systems developed for Windows OS. Optimized for Windows-Based Applications! 
-                        DecryptSecretsFromAppConfigWithWindowsDataProtectionAPI sm = new();
-                        string recipientSecretPassphraseEncrypted = _runtimeAppSettings["RecipientEncryptedSecretPassPhrase_WIND_DPAPI"];
-                        string entropy = _runtimeAppSettings["entropy"];
-                        recipientSecretPassphrase = sm.GetSecretString(recipientSecretPassphraseEncrypted, entropy);
+                        string recipientSecretPassphraseEncrypted = RuntimeAppSettings["RecipientEncryptedSecretPassPhrase_WIND_DPAPI"];
+                        string entropy = RuntimeAppSettings["entropy"];
+                        recipientSecretPassphrase = DecryptSecretsFromAppConfigWithWindowsDataProtectionAPI.GetSecretString(recipientSecretPassphraseEncrypted, entropy);
                         Log.Verbose("Decrypted Secret Passphrase using Windows Data Protection API...");
                     }
                     break;
@@ -342,11 +378,10 @@ namespace OpenPgpBatchJob
                 default:
                     {
                         // Works for Windows, Linux and macOS based Applications. Can be used on any .NET core applications, including non-ASP.NET ones. Recommended for all other types of Applications that cannot use Solutions 1 & 2. 
-                        DecryptSecretsFromAppConfigWithASPNETCoreDPAPI sm = new();
-                        string recipientSecretPassphraseEncrypted = _runtimeAppSettings["RecipientEncryptedSecretPassPhrase_ASP_DPAPI"];
-                        string entropy = _runtimeAppSettings["entropy"];
-                        string sslCertDistinguishedSubjectName = _runtimeAppSettings["SSLCertDistinguishedSubjectName"];
-                        recipientSecretPassphrase = sm.GetSecretString(recipientSecretPassphraseEncrypted, entropy, sslCertDistinguishedSubjectName);
+                        string recipientSecretPassphraseEncrypted = RuntimeAppSettings["RecipientEncryptedSecretPassPhrase_ASP_DPAPI"];
+                        string entropy = RuntimeAppSettings["entropy"];
+                        string sslCertDistinguishedSubjectName = RuntimeAppSettings["SSLCertDistinguishedSubjectName"];
+                        recipientSecretPassphrase = DecryptSecretsFromAppConfigWithASPNETCoreDPAPI.GetSecretString(recipientSecretPassphraseEncrypted, entropy, sslCertDistinguishedSubjectName);
                         Log.Verbose("Decrypted Secret Passphrase using ASP.NET Core Data Protection API...");
                     }
                     break;
@@ -369,7 +404,6 @@ namespace OpenPgpBatchJob
             string senderSecretPassphrase = GetSenderSecretPassphrase();
 
             passwd = senderSecretPassphrase.ToCharArray();
-            //Console.WriteLine("OK!");
             return PassphraseResult.Success;
         }
 
@@ -387,7 +421,6 @@ namespace OpenPgpBatchJob
         {
             string recipientSecretPassphrase = GetRecipientSecretPassphrase();
             passwd = recipientSecretPassphrase.ToCharArray();
-            //Console.WriteLine("OK!");
             return PassphraseResult.Success;
         }
 
@@ -415,10 +448,14 @@ namespace OpenPgpBatchJob
             }
 
 
-            var subkeysThumbprints = new List<string>();
-
-            subkeysThumbprints.Add(keyForUse.Subkeys.Fingerprint);
-            if (keyForUse.Subkeys.Next != null) { subkeysThumbprints.Add(keyForUse.Subkeys.Next.Fingerprint); }
+            var subkeysThumbprints = new List<string>
+            {
+                keyForUse.Subkeys.Fingerprint
+            };
+            if (keyForUse.Subkeys.Next != null) 
+            { 
+                subkeysThumbprints.Add(keyForUse.Subkeys.Next.Fingerprint); 
+            }
 
             bool ismatching = subkeysThumbprints.Contains(thumbprintOfKeyInUse);
 
@@ -437,7 +474,7 @@ namespace OpenPgpBatchJob
         {
             // Printing the EngineInfo Properties
             var engineInfoPropertiesToPrint = new List<string> { "FileName", "Protocol", "ReqVersion", "Version"};
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.Append("Engine Info Properties: ");
             sb.AppendLine(ObjectPrinter.PrintProperties(engineInfo, engineInfoPropertiesToPrint).ToString());
 

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace OpenPgpBatchJob
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -66,7 +66,7 @@ namespace OpenPgpBatchJob
 
                     // [Uncomment the following line of code if necessary for troubleshooting your chosen Secrets Manager]
                     // START -------------------------------------------------------------------------
-                    //openPgpHelper.TestSecretsManager();
+                    // openPgpHelper.TestSecretsManager();
                     // END ---------------------------------------------------------------------------
                 }
                 catch (Exception ex)
@@ -151,10 +151,7 @@ namespace OpenPgpBatchJob
                 System.Environment.Exit(-1);
             }
 
-            //#if DEBUG
-            //            Console.WriteLine("\n\nPress Enter to Exit. ");
-            //            Console.ReadLine();
-            //#endif
+            Log.Information("DONE");
 
         }
 
@@ -230,7 +227,7 @@ namespace OpenPgpBatchJob
         {
             // Printing the Key Properties
             var keyPropertiesToPrint = new List<string> { "Uid", "KeyId", "Fingerprint", "Protocol", "Revoked", "Expired", "Disabled", "Invalid", "IsQualified", "OwnerTrust", "KeylistMode", "CanAuthenticate", "CanCertify", "CanEncrypt", "CanSign", "Secret" };
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.Append("Key Properties: ");
             sb.AppendLine(ObjectPrinter.PrintProperties(key, keyPropertiesToPrint).ToString());
 
