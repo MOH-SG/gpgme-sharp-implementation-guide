@@ -1,5 +1,4 @@
-﻿using PgpCombinedCrypto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProtectSecretsWithASPNETCoreDataProtectionAPI;
 
-namespace PgpCombinedCrypto
+namespace OpenPgpBatchJob
 {
     /// <summary>
     /// This helper class uses ASP.NET Core Data Protection API to decrypt the OpenPGP private key's Secret Passphrase. 

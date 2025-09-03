@@ -15,7 +15,7 @@ namespace OpenPgpBatchJob
         /// <param name="propertyNames"></param>
         internal static StringBuilder PrintProperties(object obj, List<string> propertyNames)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             if (obj == null)
             {

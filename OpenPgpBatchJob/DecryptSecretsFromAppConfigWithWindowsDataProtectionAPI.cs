@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using ProtectSecretsWithWindowsDataProtectionAPI;
 
-namespace PgpCombinedCrypto
+namespace OpenPgpBatchJob
 {
 
     /// <summary>

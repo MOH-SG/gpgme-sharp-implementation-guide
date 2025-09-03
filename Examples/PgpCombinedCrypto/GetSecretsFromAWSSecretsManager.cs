@@ -13,7 +13,7 @@ namespace PgpCombinedCrypto
     /// </summary>
     internal class GetSecretsFromAWSSecretsManager : IGetSecrets
     {
-        private static SecretsManagerCache cache = new SecretsManagerCache();
+        private static readonly SecretsManagerCache cache = new();
         private async Task<string> GetSecretStringAsync(string SecretID)
         {
             string secrets;

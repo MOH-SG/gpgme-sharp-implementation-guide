@@ -368,7 +368,7 @@ namespace OpenPgpBatchJob.Tests.Integration
         public void PerformanceTest_Integration_EncryptDecrypt_SmallFiles_WithinAcceptableTime()
         {
             // Arrange - Create small test files (1KB - 10KB)
-            var testFiles = CreateTestFilesOfVariousSizes(new[] { 1024, 5120, 10240 }); // 1KB, 5KB, 10KB
+            var testFiles = CreateTestFilesOfVariousSizes([1024, 5120, 10240]); // 1KB, 5KB, 10KB
             var performanceResults = new List<PerformanceResult>();
 
             // Act & Assert - Test each file size
@@ -395,7 +395,7 @@ namespace OpenPgpBatchJob.Tests.Integration
         public void PerformanceTest_Integration_EncryptDecrypt_MediumFiles_WithinAcceptableTime()
         {
             // Arrange - Create medium test files (100KB - 1MB)
-            var testFiles = CreateTestFilesOfVariousSizes(new[] { 102400, 512000, 1048576 }); // 100KB, 500KB, 1MB
+            var testFiles = CreateTestFilesOfVariousSizes([102400, 512000, 1048576]); // 100KB, 500KB, 1MB
             var performanceResults = new List<PerformanceResult>();
 
             // Act & Assert - Test each file size
@@ -422,7 +422,7 @@ namespace OpenPgpBatchJob.Tests.Integration
         public void PerformanceTest_Integration_EncryptDecrypt_LargeFiles_WithinAcceptableTime()
         {
             // Arrange - Create large test files (5MB - 10MB)
-            var testFiles = CreateTestFilesOfVariousSizes(new[] { 5242880, 10485760 }); // 5MB, 10MB
+            var testFiles = CreateTestFilesOfVariousSizes([5242880, 10485760]); // 5MB, 10MB
             var performanceResults = new List<PerformanceResult>();
 
             // Act & Assert - Test each file size
@@ -449,7 +449,7 @@ namespace OpenPgpBatchJob.Tests.Integration
         public async Task PerformanceTest_Integration_EncryptDecrypt_MultipleFiles_ConcurrentProcessing()
         {
             // Arrange - Create multiple small files for concurrent processing
-            var testFiles = CreateTestFilesOfVariousSizes(new[] { 2048, 4096, 8192, 16384, 32768 }); // 2KB to 32KB
+            var testFiles = CreateTestFilesOfVariousSizes([2048, 4096, 8192, 16384, 32768]); // 2KB to 32KB
             var concurrentResults = new List<PerformanceResult>();
             var tasks = new List<Task<PerformanceResult>>();
 
@@ -495,7 +495,7 @@ namespace OpenPgpBatchJob.Tests.Integration
         public void PerformanceTest_Integration_EncryptDecrypt_MemoryUsage_WithinAcceptableLimits()
         {
             // Arrange - Create a moderately sized file to test memory usage
-            var testFile = CreateTestFilesOfVariousSizes(new[] { 1048576 }).First(); // 1MB file
+            var testFile = CreateTestFilesOfVariousSizes([1048576]).First(); // 1MB file
             var initialMemory = GC.GetTotalMemory(true);
 
             // Act - Perform encrypt/decrypt operation
@@ -525,7 +525,7 @@ namespace OpenPgpBatchJob.Tests.Integration
         public void PerformanceTest_Integration_EncryptDecrypt_RepeatedOperations_ConsistentPerformance()
         {
             // Arrange - Create test file for repeated operations
-            var testFile = CreateTestFilesOfVariousSizes(new[] { 51200 }).First(); // 50KB file
+            var testFile = CreateTestFilesOfVariousSizes([51200]).First(); // 50KB file
             var results = new List<PerformanceResult>();
             const int iterations = 5;
 

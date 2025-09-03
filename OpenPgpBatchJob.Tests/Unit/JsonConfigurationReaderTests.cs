@@ -217,6 +217,150 @@ namespace OpenPgpBatchJob.Tests.Unit
             result.Should().ContainKey("RecipientAWSSecretsName");
         }
 
+        [Fact]
+        public void LoadFromJsonFile_ConfigurationWithKeyIdSupport_LoadsKeyIdFields()
+        {
+            // Arrange
+            var configContent = CreateTestConfigurationWithKeyIdSupport();
+            var testFilePath = CreateTestFile("keyid-config.json", configContent);
+
+            // Act
+            var result = JsonConfigurationReader.LoadFromJsonFile(testFilePath);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().ContainKey("UseKeyId").WhoseValue.Should().Be("true");
+            result.Should().ContainKey("SenderKeyId").WhoseValue.Should().Be("1234ABCD");
+            result.Should().ContainKey("RecipientKeyId").WhoseValue.Should().Be("5678EFGH");
+            result.Should().ContainKey("SenderEmailAddress").WhoseValue.Should().Be("alice@home.internal");
+            result.Should().ContainKey("RecipientEmailAddress").WhoseValue.Should().Be("bob@home.internal");
+        }
+
+        [Fact]
+        public void LoadFromJsonFile_ConfigurationWithKeyIdDisabled_LoadsEmailFields()
+        {
+            // Arrange
+            var configContent = CreateTestConfigurationWithEmailOnly();
+            var testFilePath = CreateTestFile("email-config.json", configContent);
+
+            // Act
+            var result = JsonConfigurationReader.LoadFromJsonFile(testFilePath);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().ContainKey("UseKeyId").WhoseValue.Should().Be("false");
+            result.Should().ContainKey("SenderEmailAddress").WhoseValue.Should().Be("alice@home.internal");
+            result.Should().ContainKey("RecipientEmailAddress").WhoseValue.Should().Be("bob@home.internal");
+            // KeyId fields may or may not be present when UseKeyId is false
+        }
+
+        [Fact]
+        public void LoadFromJsonFile_ConfigurationWithBothKeyIdAndEmail_LoadsBothSets()
+        {
+            // Arrange
+            var configContent = CreateTestConfigurationWithBothKeyIdAndEmail();
+            var testFilePath = CreateTestFile("both-config.json", configContent);
+
+            // Act
+            var result = JsonConfigurationReader.LoadFromJsonFile(testFilePath);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().ContainKey("UseKeyId").WhoseValue.Should().Be("true");
+            result.Should().ContainKey("SenderKeyId").WhoseValue.Should().Be("ABCD1234");
+            result.Should().ContainKey("RecipientKeyId").WhoseValue.Should().Be("EFGH5678");
+            result.Should().ContainKey("SenderEmailAddress").WhoseValue.Should().Be("sender@test.com");
+            result.Should().ContainKey("RecipientEmailAddress").WhoseValue.Should().Be("recipient@test.com");
+        }
+
+        [Theory]
+        [InlineData("true")]
+        [InlineData("false")]
+        [InlineData("TRUE")]
+        [InlineData("FALSE")]
+        [InlineData("True")]
+        [InlineData("False")]
+        public void LoadFromJsonFile_ConfigurationWithVariousUseKeyIdValues_PreservesOriginalValue(string useKeyIdValue)
+        {
+            // Arrange
+            var configContent = $@"{{
+  ""OperationMode"": {{
+    ""UseKeyId"": ""{useKeyIdValue}""
+  }},
+  ""SenderConfiguration"": {{
+    ""SenderEmailAddress"": ""test@example.com"",
+    ""SenderKeyId"": ""TESTKEY123""
+  }}
+}}";
+            var testFilePath = CreateTestFile($"useKeyId-{useKeyIdValue}-config.json", configContent);
+
+            // Act
+            var result = JsonConfigurationReader.LoadFromJsonFile(testFilePath);
+
+            // Assert
+            result.Should().ContainKey("UseKeyId").WhoseValue.Should().Be(useKeyIdValue);
+        }
+
+        private string CreateTestConfigurationWithKeyIdSupport()
+        {
+            return @"{
+  ""FolderConfiguration"": {
+    ""SourceFolderPath"": ""/tmp/test/src"",
+    ""DestinationFolderPath"": ""/tmp/test/dest"",
+    ""ArchiveFolderPath"": ""/tmp/test/archive""
+  },
+  ""OperationMode"": {
+    ""ModeOfOperation"": ""SENDER"",
+    ""UseKeyId"": ""true""
+  },
+  ""SenderConfiguration"": {
+    ""SenderEmailAddress"": ""alice@home.internal"",
+    ""SenderKeyId"": ""1234ABCD""
+  },
+  ""RecipientConfiguration"": {
+    ""RecipientEmailAddress"": ""bob@home.internal"",
+    ""RecipientKeyId"": ""5678EFGH""
+  }
+}";
+        }
+
+        private string CreateTestConfigurationWithEmailOnly()
+        {
+            return @"{
+  ""FolderConfiguration"": {
+    ""SourceFolderPath"": ""/tmp/test/src"",
+    ""DestinationFolderPath"": ""/tmp/test/dest""
+  },
+  ""OperationMode"": {
+    ""ModeOfOperation"": ""RECIPIENT"",
+    ""UseKeyId"": ""false""
+  },
+  ""SenderConfiguration"": {
+    ""SenderEmailAddress"": ""alice@home.internal""
+  },
+  ""RecipientConfiguration"": {
+    ""RecipientEmailAddress"": ""bob@home.internal""
+  }
+}";
+        }
+
+        private string CreateTestConfigurationWithBothKeyIdAndEmail()
+        {
+            return @"{
+  ""OperationMode"": {
+    ""UseKeyId"": ""true""
+  },
+  ""SenderConfiguration"": {
+    ""SenderEmailAddress"": ""sender@test.com"",
+    ""SenderKeyId"": ""ABCD1234""
+  },
+  ""RecipientConfiguration"": {
+    ""RecipientEmailAddress"": ""recipient@test.com"",
+    ""RecipientKeyId"": ""EFGH5678""
+  }
+}";
+        }
+
         private string CreateTestFile(string fileName, string content)
         {
             var filePath = Path.Combine(_testDirectory, fileName);

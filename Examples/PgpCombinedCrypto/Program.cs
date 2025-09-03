@@ -21,7 +21,7 @@ namespace PgpCombinedCrypto
             // END ---------------------------------------------------------------------------
 
 
-            Context ctx = new Context();
+            Context ctx = new();
 
             if (ctx.Protocol != Protocol.OpenPGP)
                 ctx.SetEngineInfo(Protocol.OpenPGP, null, null);
@@ -112,7 +112,7 @@ namespace PgpCombinedCrypto
             ctx.Signers.Add(alice);
 
             EncryptionResult encrst = ctx.EncryptAndSign(
-                new Key[] { bob },
+                [bob],
                 EncryptFlags.AlwaysTrust,
                 plain,
                 cipher);

@@ -15,7 +15,7 @@ namespace DataBufferTest
 				bytedata[i] = (byte) (i % 256);
 			
 			// Create memory based buffer for GPGME
-			GpgmeMemoryData memdata = new GpgmeMemoryData();
+			GpgmeMemoryData memdata = new();
 			// write sample data into the GPGME memory based buffer
 			Console.WriteLine("Bytes written: " + memdata.Write(bytedata, bytedata.Length));
 			
@@ -27,8 +27,8 @@ namespace DataBufferTest
 			Console.WriteLine("Bytes read: " + memdata.Read(tmp));
 			
 			// Create stream based buffer (CBS)
-			MemoryStream memstream = new MemoryStream(tmp);
-			GpgmeStreamData streamdata = new GpgmeStreamData(memstream);
+			MemoryStream memstream = new(tmp);
+			GpgmeStreamData streamdata = new(memstream);
 			
 			// ..
 			Console.WriteLine("Bytes written: " + streamdata.Write(bytedata, bytedata.Length));

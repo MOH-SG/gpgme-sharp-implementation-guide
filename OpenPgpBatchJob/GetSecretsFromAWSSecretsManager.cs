@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Amazon.SecretsManager.Extensions.Caching;
 
 
-namespace PgpCombinedCrypto
+namespace OpenPgpBatchJob
 {
     /// <summary>
     /// Helper Class for retrieving Secrets from AWS Secrets Manager

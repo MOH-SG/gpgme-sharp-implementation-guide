@@ -1,15 +1,11 @@
 ﻿#nullable enable
 using Libgpgme;
-using PgpCombinedCrypto;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 using System.IO;
-using System.Configuration;
 using Serilog;
 
 namespace OpenPgpBatchJob
@@ -19,12 +15,12 @@ namespace OpenPgpBatchJob
         public Dictionary<string, string> RuntimeAppSettings { get; set; } = [];
         public string SenderEmail 
         { 
-            get => _senderEmail ?? throw new InvalidOperationException("SenderEmail not initialized"); 
+            get => _senderEmail ?? ""; 
             set => _senderEmail = value; 
         }
         public string RecipientEmail 
         { 
-            get => _recipientEmail ?? throw new InvalidOperationException("RecipientEmail not initialized"); 
+            get => _recipientEmail ?? ""; 
             set => _recipientEmail = value; 
         }
         public PgpKey RecipientKey 
@@ -37,6 +33,21 @@ namespace OpenPgpBatchJob
             get => _senderKey ?? throw new InvalidOperationException("SenderKey not initialized"); 
             set => _senderKey = value; 
         }
+        public bool UseKeyId 
+        { 
+            get => _useKeyId; 
+            set => _useKeyId = value; 
+        }
+        public string SenderKeyId 
+        { 
+            get => _senderKeyId ?? ""; 
+            set => _senderKeyId = value; 
+        }
+        public string RecipientKeyId 
+        { 
+            get => _recipientKeyId ?? ""; 
+            set => _recipientKeyId = value; 
+        }
 
         private Context? _ctx;
         private string? _senderEmail;
@@ -44,6 +55,9 @@ namespace OpenPgpBatchJob
         private KeyStore? _keyring;
         private PgpKey? _recipientKey;
         private PgpKey? _senderKey;
+        private bool _useKeyId;
+        private string? _senderKeyId;
+        private string? _recipientKeyId;
 
         public OpenPgpHelper() { }
 
@@ -58,20 +72,28 @@ namespace OpenPgpBatchJob
             if (RuntimeAppSettings == null)
                 throw new InvalidOperationException("RuntimeAppSettings not set");
 
-            // Validate required configuration keys exist
-            if (!RuntimeAppSettings.TryGetValue("SenderEmailAddress", out var senderEmailValue) || string.IsNullOrWhiteSpace(senderEmailValue))
-                throw new InvalidOperationException("SenderEmailAddress not configured");
-                
-            if (!RuntimeAppSettings.TryGetValue("RecipientEmailAddress", out var recipientEmailValue) || string.IsNullOrWhiteSpace(recipientEmailValue))
-                throw new InvalidOperationException("RecipientEmailAddress not configured");
+            // Validate required configuration keys settings exist. Use Key ID if the corresponding setting is true.
+            RuntimeAppSettings.TryGetValue("UseKeyId", out var useKeyId);
+            RuntimeAppSettings.TryGetValue("SenderKeyId", out var senderKeyId);
+            RuntimeAppSettings.TryGetValue("RecipientKeyId", out var recipientKeyId);
+            RuntimeAppSettings.TryGetValue("SenderEmailAddress", out var senderEmailValue);
+            RuntimeAppSettings.TryGetValue("RecipientEmailAddress", out var recipientEmailValue);
 
-            SenderEmail = senderEmailValue.Trim();
-            RecipientEmail = recipientEmailValue.Trim();
+            UseKeyId = (useKeyId != null && useKeyId.Trim().Equals("TRUE",StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(senderKeyId)) SenderKeyId = senderKeyId.Trim();
+            else SenderKeyId = "";
+            if (!string.IsNullOrWhiteSpace(recipientKeyId)) RecipientKeyId = recipientKeyId.Trim();
+            else RecipientKeyId = "";
+            if (!string.IsNullOrWhiteSpace(senderEmailValue)) SenderEmail = senderEmailValue.Trim();
+            else SenderEmail = "";
+            if (!string.IsNullOrWhiteSpace(recipientEmailValue)) RecipientEmail = recipientEmailValue.Trim();
+            else RecipientEmail = "";
 
-            String[] searchpattern = new String[2];
-            searchpattern[0] = SenderEmail;
-            searchpattern[1] = RecipientEmail;
-
+            if (UseKeyId && (string.IsNullOrEmpty(SenderKeyId) || string.IsNullOrEmpty(RecipientKeyId)))
+                throw new InvalidOperationException("SenderKeyId and RecipientKeyId must be configured when UseKeyId is true");
+            if (!UseKeyId && (string.IsNullOrEmpty(SenderEmail) || string.IsNullOrEmpty(RecipientEmail)))
+                throw new InvalidOperationException("SenderEmail and RecipientEmail must be configured when UseKeyId is false");
+            String[] searchpattern = [SenderEmail, RecipientEmail];
             _keyring = _ctx.KeyStore;
 
             // We want the key signatures!
@@ -85,11 +107,17 @@ namespace OpenPgpBatchJob
             {
                 foreach (Key k in keys)
                 {
-                    if (k.Uid != null)
+                    if (!UseKeyId && k.Uid != null)
                     {
-                        if (RecipientKey == null && k.Uid.Email.Equals(RecipientEmail))
+                        if (_recipientKey == null && k.Uid.Email.Equals(RecipientEmail))
                             RecipientKey = (PgpKey)k;
-                        if (SenderKey == null && k.Uid.Email.Equals(SenderEmail))
+                        if (_senderKey == null && k.Uid.Email.Equals(SenderEmail))
+                            SenderKey = (PgpKey)k;
+                    } else if (UseKeyId && k.KeyId != null)
+                    {
+                        if (_recipientKey == null && k.KeyId.Equals(RecipientKeyId))
+                            RecipientKey = (PgpKey)k;
+                        if (_senderKey == null && k.KeyId.Equals(SenderKeyId))
                             SenderKey = (PgpKey)k;
                     }
                     else
@@ -134,7 +162,7 @@ namespace OpenPgpBatchJob
 
             Log.Information($"Source File Size: {plain.Length / 1024.0:N2} KBytes...");
             EncryptionResult encrst = _ctx.EncryptAndSign(
-                new Key[] { _recipientKey },
+                [_recipientKey],
                 EncryptFlags.AlwaysTrust,
                 plain,
                 cipher);

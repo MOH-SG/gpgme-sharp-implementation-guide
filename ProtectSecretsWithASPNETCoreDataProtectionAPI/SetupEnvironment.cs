@@ -26,7 +26,7 @@ namespace ProtectSecretsWithASPNETCoreDataProtectionAPI
         {
             using (RSA rsa = RSA.Create(2048))
             {
-                CertificateRequest request = new CertificateRequest(subjectName, rsa, HashAlgorithmName.SHA256,
+                CertificateRequest request = new(subjectName, rsa, HashAlgorithmName.SHA256,
                     RSASignaturePadding.Pkcs1);
                 X509Certificate2 certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddYears(2));
                 return certificate;
@@ -41,7 +41,7 @@ namespace ProtectSecretsWithASPNETCoreDataProtectionAPI
         {
             byte[] rawData = certificate.Export(X509ContentType.Pkcs12, password: "");
 
-            using (X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser, OpenFlags.MaxAllowed))
+            using (X509Store store = new(StoreName.My, StoreLocation.CurrentUser, OpenFlags.MaxAllowed))
             {
                 //store.Certificates.Import(rawData, password: "password123", keyStorageFlags: X509KeyStorageFlags.PersistKeySet);
                 store.Add(new X509Certificate2(rawData));
@@ -59,7 +59,7 @@ namespace ProtectSecretsWithASPNETCoreDataProtectionAPI
         {
             //string subjectName = "CN=ASP.NET Core Data Protection Certificate";
 
-            using (X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser, OpenFlags.ReadOnly))
+            using (X509Store store = new(StoreName.My, StoreLocation.CurrentUser, OpenFlags.ReadOnly))
             {
                 X509Certificate2Collection certificateCollection = store.Certificates.Find(X509FindType.FindByIssuerDistinguishedName,
                     sslCertDistinguishedSubjectName,
