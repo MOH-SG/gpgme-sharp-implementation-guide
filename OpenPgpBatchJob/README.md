@@ -25,7 +25,3 @@ Options to obtain the Batch job:
 2.	Build the Batch Job from Source Code: Choose this if you either intend to customize the Batch Job or need to build the Batch Job for Non-Windows OS.
 
 Refer to [SETUP.docx](SETUP.docx) for further instructions.
-
-
-
-� 2023 jonathan_aw@moh.gov.sg
