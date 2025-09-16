@@ -1,3 +1,8 @@
+2025-09-03 Added functionality to retrieve keys by Key ID instead of email depending on config parameter.
+
+2025-08-23 Added basic testing suite
+	*	Tests added as OpenPgpBatchJob.Tests
+
 2025-08-12 Updated for .NET 8.0 - NA
     *   Updated all projects to target .NET 8.0 (LTS) for improved performance and latest framework features
     *   Updated documentation to reflect .NET 8.0 target framework
